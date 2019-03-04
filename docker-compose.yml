@@ -1,0 +1,21 @@
+version: '3'
+services:
+    producer:
+        build: 'app'
+        command: python3 -u producer.py rabbitmq 5672
+        depends_on:
+            - rabbitmq
+    concumer:
+        build: 'app'
+        command: python3 -u concumer.py rabbitmq 5672
+        depends_on:
+            - rabbitmq
+            # - postgres
+    rabbitmq:
+        image: 'rabbitmq'
+    # postgres:
+    #     image: 'postgres:11.2-alpine'
+    #     volumes:
+    #         - ./pgdata:/var/lib/postgresql/data/pgdata
+    #     environment:
+    #         PGDATA: /var/lib/postgresql/data/pgdata
